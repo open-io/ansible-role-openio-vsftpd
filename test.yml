@@ -1,7 +1,34 @@
 ---
 - hosts: all
   become: true
+  pre_tasks:
+      - file:
+          name: /mnt/ftp
+          state: directory
+          owner: root
+          group: root
+          mode: 0755
   roles:
     - role: users
+      openio_users_add:
+        - username: ftpsecure
+          name: Default ftp user
+          group: ftpusers
+          home_create: false
+          system: true
+          shell: /sbin/nologin
+          groups: []
+        - username: testuser
+          name: FTP Test user
+          group: ftpusers
+          home_create: true
+          system: true
+          shell: /sbin/nologin
+          groups: []
+          password: "{{ '1234' | password_hash('sha512') }}"
+          update_password: on_create
+      openio_users_home: /mnt/ftp
+      openio_users_groups:
+        - groupname: ftpusers
     - role: vsftpd
 ...

@@ -22,7 +22,7 @@ readonly script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 IFS=$'\t\n'   # Split on newlines and tabs (but not on spaces)
 
 readonly container_id="$(mktemp)"
-readonly role_dir='/etc/ansible/roles/role_under_test'
+readonly role_dir='/etc/ansible/roles/vsftpd'
 if [ "$#" -ne 1 ]; then
     readonly test_playbook="${role_dir}/docker-tests/test.yml"
 else
@@ -42,7 +42,7 @@ main() {
   configure_environment
 
   start_container
-
+  provision
   run_galaxy_install
   run_syntax_check
   run_test_playbook
@@ -80,7 +80,6 @@ configure_environment() {
       ;;
     'ubuntu_18.04'|'ubuntu_16.04'|'debian_8')
       run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=NET_ADMIN' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE')
-
       #if [ -x '/usr/sbin/getenforce' ]; then
       #  run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
       #fi
@@ -110,6 +109,10 @@ start_container() {
     "${init}" \
     > "${container_id}"
   set +x
+}
+
+function provision() {
+   exec_container yum install -y openssl
 }
 
 get_container_id() {
