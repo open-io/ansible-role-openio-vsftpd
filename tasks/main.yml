@@ -4,7 +4,7 @@
   package:
     name: "{{ pkg }}"
     state: present
-  with_items: "{{ vsftpd_packages }}"
+  with_items: "{{ openio_vsftpd_packages }}"
   loop_control:
     loop_var: pkg
   ignore_errors: "{{ ansible_check_mode }}"
@@ -17,8 +17,8 @@
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-    owner: vsftpd
-    group: vsftpd
+    owner: root
+    group: root
     mode: 0644
   with_items:
     - src: "vsftpd.conf.j2"
@@ -50,11 +50,10 @@
   tags: configure
 
 - name: "Generate a Self Signed OpenSSL certificate"
-  openssl_certificate:
-    path: /etc/ssl/crt/ansible.com.crt
-    privatekey_path: /etc/ssl/private/ansible.com.pem
-    csr_path: /etc/ssl/csr/ansible.com.csr
-    provider: selfsigned
+  command: "openssl req -x509 -nodes -days 7600 -newkey rsa:1024 -keyout \
+    {{ openio_vsftpd_ssl_cert_dir }}/{{ openio_vsftpd_ssl_cert_file }} \
+    -out {{ openio_vsftpd_ssl_cert_dir }}/{{ openio_vsftpd_ssl_cert_file }} \
+    -subj '/C=US/ST=US/L=US/O=US/OU=US/CN=US'"
   when:
     - openio_vsftpd_ssl_cert_generate
     - cert_file.stat.islnk is not defined

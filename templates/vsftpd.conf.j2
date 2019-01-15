@@ -37,7 +37,7 @@ ftpd_banner={{ openio_vsftpd_banner }}
 #deny_email_enable=YES
 #banned_email_file=/etc/vsftpd/banned_emails
 
-chroot_local_user={{ 'YES' if openio_vsftpd_chroot_local_user_enable else 'NO' }}
+chroot_local_user={{ 'YES' if openio_vsftpd_chroot_local_user else 'NO' }}
 #chroot_list_enable=YES
 #chroot_list_file=/etc/vsftpd/chroot_list
 

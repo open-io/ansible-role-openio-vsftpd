@@ -6,7 +6,7 @@ openio_vsftpd_bind_address:
 openio_vsftpd_bind_port: 21
 openio_vsftpd_conf_file: /etc/vsftpd/vsftpd.conf
 openio_vsftpd_pam_service_name: vsftpd
-openio_vsftpd_authorized_group: ftp
+openio_vsftpd_authorized_group: ftpusers
 
 openio_vsftpd_local_umask: 022
 openio_vsftpd_provision_only: false
@@ -26,7 +26,7 @@ openio_vsftpd_syslog_enable: true
 openio_vsftpd_async_abor_enable: true
 openio_vsftpd_ls_recurse_enable: true
 openio_vsftpd_anon_enable: false
-openio_vsftpd_local_enable: false
+openio_vsftpd_local_enable: true
 openio_vsftpd_connect_from_port_20_enable: true
 openio_vsftpd_ascii_mangling_enable: true
 
