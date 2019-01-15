@@ -1,53 +1,20 @@
-[![Build Status](https://travis-ci.org/open-io/ansible-role-openio-vsftpd.svg?branch=master)](https://travis-ci.org/open-io/ansible-role-openio-vsftpd)
-# Ansible role `vsftpd`
+# Docker test environment
 
-Ansible role that installs and configures a FTP server using `vsftpd`
+1. Fetch the test branch: `git fetch origin docker-tests`
+2. Create a Git worktree for the test code: `git worktree add docker-tests docker-tests`. This will create a directory `docker-tests/`
+3. The script `docker-tests.sh` will create a Docker container, and apply this role from a playbook `<test.yml>`. The Docker images are configured for testing Ansible roles and are published at <https://hub.docker.com/r/cdelgehier/docker_images_ansible/>. There are images available for several distributions and versions. The distribution and version should be specified outside the script using environment variables:
 
-## Requirements
+    ```
+    DISTRIBUTION=centos VERSION=7 ANSIBLE_VERSION=2.5 ./docker-tests/docker-tests.sh
+    DISTRIBUTION=ubuntu VERSION=16.04 ANSIBLE_VERSION=2.5 ./docker-tests/docker-tests.sh
+    ```
+4. You can test another use case by adding an argument to the script. An argument `<another>` will apply a playbook `<another.yml>`
 
-- Ansible 2.4+
+5. You can run functionnal tests locally like that:
 
-## Role Variables
+    ```
+    SUT_ID=9acda29c356b ./docker-tests/functional-tests.sh
+    SUT_IP=172.17.0.2   ./docker-tests/functional-tests.sh
+    ```
 
-
-| Variable   | Default | Comments (type)  |
-| :---       | :---    | :---             |
-| `openio_vsftpd_...` | `...`   | ...              |
-
-## Dependencies
-
-No dependencies.
-
-## Example Playbook
-
-```yaml
-- hosts: all
-  become: true
-  roles:
-    - role: users
-    - role: vsftpd
-```
-
-```ini
-[all]
-node1 ansible_host=192.168.1.173
-```
-
-## Contributing
-
-Issues, feature requests, ideas are appreciated and can be posted in the Issues section.
-
-Pull requests are also very welcome.
-The best way to submit a PR is by first creating a fork of this Github project, then creating a topic branch for the suggested change and pushing that branch to your own fork.
-Github can then easily create a PR based on that branch.
-
-## License
-
-GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
-
-## Contributors
-
-- [Vladimir DOMBROVSKI](https://github.com/vdombrovski) (maintainer)
-- [Cedric DELGEHIER](https://github.com/cdelgehier) (maintainer)
-- [Romain ACCIARI](https://github.com/racciari) (maintainer)
-- [Vincent LEGOLL](https://github.com/vincent-legoll) (maintainer)
+The specific combinations of distributions and versions that are supported by this role are specified in `.travis.yml`.
