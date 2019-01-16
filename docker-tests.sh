@@ -66,10 +66,12 @@ configure_environment() {
   case "${DISTRIBUTION}_${VERSION}" in
     'centos_6')
       run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
+      provision_cmd="yum install -y openssl"
       ;;
     'centos_8'|'centos_7'|'fedora_25')
       init=/usr/lib/systemd/systemd
       run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
+      provision_cmd="yum install -y openssl"
       ;;
     'ubuntu_14.04')
       #run_opts+=('--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro')
@@ -77,9 +79,11 @@ configure_environment() {
       if [ -x '/usr/sbin/getenforce' ]; then
         run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
       fi
+      provision_cmd="apt install -y openssl"
       ;;
     'ubuntu_18.04'|'ubuntu_16.04'|'debian_8')
       run_opts=('--volume=/run' '--volume=/run/lock' '--volume=/tmp' '--volume=/sys/fs/cgroup:/sys/fs/cgroup:ro' '--cap-add=NET_ADMIN' '--cap-add=SYS_ADMIN' '--cap-add=SYS_RESOURCE')
+      provision_cmd="apt install -y openssl"
       #if [ -x '/usr/sbin/getenforce' ]; then
       #  run_opts+=('--volume=/sys/fs/selinux:/sys/fs/selinux:ro')
       #fi
@@ -112,7 +116,7 @@ start_container() {
 }
 
 function provision() {
-   exec_container yum install -y openssl
+   exec_container /bin/bash -c "$provision_cmd"
 }
 
 get_container_id() {
