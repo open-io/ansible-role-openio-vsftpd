@@ -30,5 +30,5 @@
       openio_users_home: /mnt/ftp
       openio_users_groups:
         - groupname: ftpusers
-    - role: vsftpd
+    - role: role_under_test
 ...

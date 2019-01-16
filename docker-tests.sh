@@ -22,7 +22,7 @@ readonly script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 IFS=$'\t\n'   # Split on newlines and tabs (but not on spaces)
 
 readonly container_id="$(mktemp)"
-readonly role_dir='/etc/ansible/roles/vsftpd'
+readonly role_dir='/etc/ansible/roles/role_under_test'
 if [ "$#" -ne 1 ]; then
     readonly test_playbook="${role_dir}/docker-tests/test.yml"
 else
