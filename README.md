@@ -23,7 +23,6 @@ Ansible role that installs and configures a FTP server using `vsftpd`
 | `openio_vsftpd_bind_interface`              | ``                        | FTP bind interface                                  |
 | `openio_vsftpd_bind_port`                   | `21`                      | FTP bind port                                       |
 | `openio_vsftpd_chroot_local_user`           | `true`                    | Chroot users                                        |
-| `openio_vsftpd_conf_file`                   | `/etc/vsftpd/vsftpd.conf` | Path to config file                                 |
 | `openio_vsftpd_connect_from_port_20_enable` | `true`                    | Accept connections from port 20                     |
 | `openio_vsftpd_connection_timeout`          | `120`                     | Connection timeout                                  |
 | `openio_vsftpd_dirmessage_enable`           | `false`                   | Enable directory messages                           |

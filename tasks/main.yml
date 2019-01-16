@@ -1,5 +1,12 @@
 # roles/vsftpd/tasks/main.yml
 ---
+- name: "Include {{ ansible_distribution }} variables"
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: install
+
 - name: Install packages
   package:
     name: "{{ pkg }}"
@@ -22,11 +29,26 @@
     mode: 0644
   with_items:
     - src: "vsftpd.conf.j2"
-      dest: "{{ openio_vsftpd_conf_file }}"
+      dest: "{{ openio_vsftpd_config_file }}"
     - src: "pamd-vsftpd.j2"
       dest: "/etc/pam.d/{{ openio_vsftpd_pam_service_name }}"
   register: _vsftpd_conf
   tags: configure
+
+- name: "Check pam password-auth file exists"
+  stat:
+    path: "/etc/pam.d/password-auth"
+  register: pam_pwd_auth
+  tags: configure
+
+- name: "Create PAM password-auth if it doesn't exist"
+  copy:
+    src: "password-auth"
+    dest: "/etc/pam.d/password-auth"
+    owner: root
+    group: root
+    mode: 0644
+  when: pam_pwd_auth.stat.islnk is not defined
 
 - name: "Ensure certificate directory exists"
   file:
