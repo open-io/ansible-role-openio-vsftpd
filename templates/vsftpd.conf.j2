@@ -50,7 +50,6 @@ listen_port={{ openio_vsftpd_bind_port }}
 
 tcp_wrappers={{ 'YES' if openio_vsftpd_tcp_wrappers_enable else 'NO' }}
 
-# openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout /etc/ssl/private/vsftpd.pem -out /etc/ssl/private/vsftpd.pem
 rsa_cert_file={{ openio_vsftpd_ssl_cert_dir }}/{{ openio_vsftpd_ssl_cert_file }}
 rsa_private_key_file={{ openio_vsftpd_ssl_cert_dir }}/{{ openio_vsftpd_ssl_cert_file }}
 

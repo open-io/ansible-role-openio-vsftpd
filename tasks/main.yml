@@ -50,7 +50,7 @@
   tags: configure
 
 - name: "Generate a Self Signed OpenSSL certificate"
-  command: "openssl req -x509 -nodes -days 7600 -newkey rsa:1024 -keyout \
+  command: "openssl req -x509 -nodes -days 7600 -newkey rsa:2048 -keyout \
     {{ openio_vsftpd_ssl_cert_dir }}/{{ openio_vsftpd_ssl_cert_file }} \
     -out {{ openio_vsftpd_ssl_cert_dir }}/{{ openio_vsftpd_ssl_cert_file }} \
     -subj '/C=US/ST=US/L=US/O=US/OU=US/CN=US'"
