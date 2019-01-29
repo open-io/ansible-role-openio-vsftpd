@@ -45,6 +45,7 @@ Ansible role that installs and configures a FTP server using `vsftpd`
 | `openio_vsftpd_ssl_proto`                   | `tlsv1`                   | SSL Protocol (TLSV1/SSLV2/SSLV3)                    |
 | `openio_vsftpd_ssl_require_reuse`           | `true`                    | SSL require reusable sessions                       |
 | `openio_vsftpd_syslog_enable`               | `true`                    | Log to syslog                                       |
+| `openio_vsftpd_systemd_managed`             | `true`                    | VSFTPD server is managed by systemd                 |
 | `openio_vsftpd_tcp_wrappers_enable`         | `true`                    | Enable TCP wrappers                                 |
 | `openio_vsftpd_write_enable`                | `true`                    | Enable FTP write                                    |
 

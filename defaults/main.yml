@@ -48,4 +48,6 @@ openio_vsftpd_ssl_proto: tlsv1
 openio_vsftpd_ssl_cert_generate: true
 openio_vsftpd_ssl_cert_dir: /etc/ssl/private
 openio_vsftpd_ssl_cert_file: vsftpd.pem
+
+openio_vsftpd_systemd_managed: true
 ...
