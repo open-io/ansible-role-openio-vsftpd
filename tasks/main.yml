@@ -86,6 +86,7 @@
     name: vsftpd
     state: restarted
   when:
+    - openio_vsftpd_systemd_managed
     - not openio_vsftpd_provision_only
     - _vsftpd_conf.changed
   tags: configure
